@@ -89,6 +89,88 @@ After cloning the repo and running `npm run generate`, add the local marketplace
 
 The generated Codex plugin includes both `commands/` and `skills/`. The `workflow-*` skills mirror slash-command workflows so they can be enabled or disabled from the plugin detail screen.
 
+## Updating C-Vault
+
+Use the same `--tool`, `--target`, and `--packs` values you used during install. Always run a dry-run first so you can see which C-Vault-managed files will be refreshed.
+
+### Manual Checkout Update
+
+From a cloned repo:
+
+```bash
+cd c-vault-super-powered-second-brain
+git pull
+npm run validate
+node bin/setup.js --dry-run --tool=auto --target="/path/to/vault"
+node bin/setup.js --tool=auto --target="/path/to/vault"
+```
+
+For a clean update that removes files tracked by the previous install manifest before installing the new release:
+
+```bash
+node bin/setup.js --uninstall --target="/path/to/vault"
+node bin/setup.js --tool=auto --target="/path/to/vault"
+```
+
+### GitHub npx Update
+
+Update directly from GitHub:
+
+```bash
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --dry-run --tool=auto --target="/path/to/vault"
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --tool=auto --target="/path/to/vault"
+```
+
+For a clean GitHub-based update:
+
+```bash
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --uninstall --target="/path/to/vault"
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --tool=auto --target="/path/to/vault"
+```
+
+To pin a specific release tag or commit:
+
+```bash
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain#v0.1.0 --tool=auto --target="/path/to/vault"
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain#COMMIT_SHA --tool=auto --target="/path/to/vault"
+```
+
+### npm Update
+
+Use `@latest` for the newest published release:
+
+```bash
+npx @bigdeal-ventures/c-vault@latest --dry-run --tool=auto --target="/path/to/vault"
+npx @bigdeal-ventures/c-vault@latest --tool=auto --target="/path/to/vault"
+```
+
+For a clean npm-based update:
+
+```bash
+npx @bigdeal-ventures/c-vault@latest --uninstall --target="/path/to/vault"
+npx @bigdeal-ventures/c-vault@latest --tool=auto --target="/path/to/vault"
+```
+
+To pin a specific published version:
+
+```bash
+npx @bigdeal-ventures/c-vault@0.1.0 --tool=auto --target="/path/to/vault"
+```
+
+### Codex Plugin Update
+
+For a local Codex plugin checkout, pull the latest source, regenerate the plugin, then reinstall it from the local marketplace:
+
+```bash
+cd c-vault-super-powered-second-brain
+git pull
+npm run generate
+/plugin remove c-vault
+/plugin install c-vault
+```
+
+Re-run the project installer as well if you also installed the generated `.agents/skills`, `AGENTS.md`, Claude Code commands, Cursor rules, OpenCode commands, or Obsidian templates into a vault.
+
 ## Supported Targets
 
 | Target | Output |
@@ -113,4 +195,4 @@ npm run validate
 
 ## Safety
 
-C-Vault is additive by default. Existing files are not silently overwritten. Install actions are recorded in `.c-vault-install.json` so they can be reviewed or removed.
+C-Vault writes only the generated paths for the selected tool and pack set. Updates refresh those C-Vault-managed files and record the current install in `.c-vault-install.json` so they can be reviewed or removed. If you customize generated C-Vault files directly, commit or back them up before updating.
