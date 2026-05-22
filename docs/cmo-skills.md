@@ -27,6 +27,14 @@ Use `cm-*` commands when you want a guided multi-step process:
 
 Use specialist skills when you need a focused marketing deliverable. Examples include `content-strategy`, `positioning`, `copywriting`, `copy-editing`, `icp-research`, `competitive-analysis`, `gtm-strategy`, `seo-audit`, `ai-seo`, `page-cro`, `paid-ads`, `pricing-strategy`, `email-sequence`, `press-pr`, `sales-enablement`, and `revops`.
 
+## Handbook
+
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)
+
 ## MCP and Integrations
 
 The pack includes public setup notes for MCP-backed research tools and marketing integrations. Generated installed docs place these under:

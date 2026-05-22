@@ -95,6 +95,14 @@ CMO Skills v1.6.0 adds reusable Compounding Marketing workflows and specialist B
 - Use specialist skills when you need a focused deliverable, such as positioning, ICP research, copywriting, SEO, CRO, pricing, or GTM strategy.
 - Use `using-c-vault` when you want the agent to choose the best route from a natural-language request.
 
+## Handbook
+
+- `CMO Skills/Start Here.md` - recommended setup and first workflow path.
+- `CMO Skills/Playbooks.md` - scenario-based playbooks for launch, positioning, content, SEO/AEO, CRO, lifecycle, paid, and RevOps.
+- `CMO Skills/Decision Guide.md` - which command or skill to use by user intent.
+- `CMO Skills/Operating Cadence.md` - daily, weekly, sprint, monthly, and quarterly marketing rhythms.
+- `CMO Skills/Example Outputs.md` - examples of useful deliverables and output shapes.
+
 ## MCP and Integrations
 
 If installed, CMO MCP setup notes live under `CMO Skills/MCP`. Integration notes live under `CMO Skills/Integrations`. These docs use placeholder credentials and environment variables only; add real keys in your local tool configuration, not in the vault docs.

@@ -13,7 +13,7 @@ C-Vault is a modular second-brain setup for Obsidian and agentic tools. It bundl
 2. Read `Command Catalog.md` when you know the workflow you want to run.
 3. Read `Skill Catalog.md` when you want a specialist capability.
 4. Read `Examples.md` for practical prompts and slash-command examples.
-5. Read `CMO Skills Guide.md` for marketing workflows, MCP notes, and integrations.
+5. Read `CMO Skills Guide.md` for the overview, then `CMO Skills/Start Here.md`, `CMO Skills/Decision Guide.md`, and `CMO Skills/Playbooks.md` for real work.
 
 ## Installed Surfaces
 

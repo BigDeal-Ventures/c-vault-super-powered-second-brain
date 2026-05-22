@@ -117,6 +117,11 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Core Workflows.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Start Here.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Playbooks.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Decision Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Operating Cadence.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Example Outputs.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Command Catalog.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Skill Catalog.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Examples.md')));
@@ -168,6 +173,19 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   const skillCatalog = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Skill Catalog.md'), 'utf8');
   assert.match(skillCatalog, /content-strategy/);
 
+  const cmoStartHere = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Start Here.md'), 'utf8');
+  assert.match(cmoStartHere, /cm-context/);
+  assert.match(cmoStartHere, /research/);
+  assert.match(cmoStartHere, /positioning/);
+
+  const cmoPlaybooks = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Playbooks.md'), 'utf8');
+  assert.match(cmoPlaybooks, /Launch/);
+  assert.match(cmoPlaybooks, /Content Engine/);
+
+  const cmoDecisionGuide = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Decision Guide.md'), 'utf8');
+  assert.match(cmoDecisionGuide, /If the user asks/);
+  assert.match(cmoDecisionGuide, /Use/);
+
   const workflowAgent = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/agents/openai.yaml'), 'utf8');
   assert.match(workflowAgent, /display_name: "Daily Review"/);
   assert.match(workflowAgent, /short_description:/);
@@ -213,6 +231,11 @@ test('generateAll writes pack-specific docs for cmo-skills only installs', () =>
   assert.equal(result.packs, 1);
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Start Here.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Playbooks.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Decision Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Operating Cadence.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Example Outputs.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/MCP/exa/setup.md')));
   assert.equal(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Core Workflows.md')), false);
 

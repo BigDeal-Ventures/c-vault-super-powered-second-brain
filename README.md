@@ -12,6 +12,11 @@ It is inspired by Claudesidian's simple vault-first setup, then adds a modular p
 - [Overview](docs/overview.md)
 - [Core workflows](docs/core-workflows.md)
 - [CMO Skills](docs/cmo-skills.md)
+- [CMO Skills Start Here](docs/cmo-skills-start-here.md)
+- [CMO Skills Playbooks](docs/cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](docs/cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](docs/cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](docs/cmo-skills-example-outputs.md)
 - [Examples](docs/examples.md)
 - [Install and update safety](docs/install-update-safety.md)
 
