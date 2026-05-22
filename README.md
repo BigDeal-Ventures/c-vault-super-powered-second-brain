@@ -44,6 +44,8 @@ To remove files created by the installer:
 node bin/setup.js --uninstall --target="/path/to/vault"
 ```
 
+By default, uninstall skips tracked files that were modified after installation. Use `--force --backup` only when you want to remove modified tracked files and keep `.bak` copies first.
+
 ### GitHub Install
 
 Run the installer directly from GitHub:
@@ -91,7 +93,23 @@ The generated Codex plugin includes both `commands/` and `skills/`. The `workflo
 
 ## Updating C-Vault
 
-Use the same `--tool`, `--target`, and `--packs` values you used during install. Always run a dry-run first so you can see which C-Vault-managed files will be refreshed.
+Use the same `--tool`, `--target`, and `--packs` values you used during install. Always run a dry-run first so you can see which C-Vault-managed files will be created, updated, left unchanged, removed, or skipped as conflicts.
+
+C-Vault updates are safe by default:
+
+- Files that are missing are created.
+- Files that still match the last C-Vault install are updated.
+- Files that already match the new release are left unchanged.
+- Files modified by the user are skipped and reported as conflicts.
+- Obsolete tracked files are kept unless you pass `--clean`.
+
+Useful update flags:
+
+```bash
+--clean        remove obsolete C-Vault-tracked files that have not been modified
+--force        overwrite or remove modified C-Vault-tracked files
+--backup       create .bak files before forced overwrite/removal
+```
 
 ### Manual Checkout Update
 
@@ -105,11 +123,17 @@ node bin/setup.js --dry-run --tool=auto --target="/path/to/vault"
 node bin/setup.js --tool=auto --target="/path/to/vault"
 ```
 
-For a clean update that removes files tracked by the previous install manifest before installing the new release:
+For a clean update that also removes obsolete tracked files from older releases:
 
 ```bash
-node bin/setup.js --uninstall --target="/path/to/vault"
-node bin/setup.js --tool=auto --target="/path/to/vault"
+node bin/setup.js --dry-run --clean --tool=auto --target="/path/to/vault"
+node bin/setup.js --clean --tool=auto --target="/path/to/vault"
+```
+
+If the dry-run reports conflicts and you intentionally want the release version to replace local edits:
+
+```bash
+node bin/setup.js --force --backup --tool=auto --target="/path/to/vault"
 ```
 
 ### GitHub npx Update
@@ -124,8 +148,14 @@ npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --tool=auto
 For a clean GitHub-based update:
 
 ```bash
-npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --uninstall --target="/path/to/vault"
-npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --tool=auto --target="/path/to/vault"
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --dry-run --clean --tool=auto --target="/path/to/vault"
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --clean --tool=auto --target="/path/to/vault"
+```
+
+To intentionally overwrite local edits while preserving backups:
+
+```bash
+npx --yes github:BigDeal-Ventures/c-vault-super-powered-second-brain --force --backup --tool=auto --target="/path/to/vault"
 ```
 
 To pin a specific release tag or commit:
@@ -147,8 +177,14 @@ npx @bigdeal-ventures/c-vault@latest --tool=auto --target="/path/to/vault"
 For a clean npm-based update:
 
 ```bash
-npx @bigdeal-ventures/c-vault@latest --uninstall --target="/path/to/vault"
-npx @bigdeal-ventures/c-vault@latest --tool=auto --target="/path/to/vault"
+npx @bigdeal-ventures/c-vault@latest --dry-run --clean --tool=auto --target="/path/to/vault"
+npx @bigdeal-ventures/c-vault@latest --clean --tool=auto --target="/path/to/vault"
+```
+
+To intentionally overwrite local edits while preserving backups:
+
+```bash
+npx @bigdeal-ventures/c-vault@latest --force --backup --tool=auto --target="/path/to/vault"
 ```
 
 To pin a specific published version:
@@ -195,4 +231,4 @@ npm run validate
 
 ## Safety
 
-C-Vault writes only the generated paths for the selected tool and pack set. Updates refresh those C-Vault-managed files and record the current install in `.c-vault-install.json` so they can be reviewed or removed. If you customize generated C-Vault files directly, commit or back them up before updating.
+C-Vault writes only the generated paths for the selected tool and pack set. The installer records file hashes in `.c-vault-install.json`; later updates use those hashes to avoid overwriting local edits. Modified tracked files are skipped by default during updates and uninstall. Use `--force --backup` when you intentionally want to replace or remove modified tracked files while keeping `.bak` copies.

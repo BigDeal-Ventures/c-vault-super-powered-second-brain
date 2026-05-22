@@ -13,6 +13,9 @@ function parseArgs(argv) {
     packs: [],
     dryRun: false,
     uninstall: false,
+    force: false,
+    backup: false,
+    clean: false,
     help: false,
     version: false,
   };
@@ -20,6 +23,9 @@ function parseArgs(argv) {
   for (const arg of argv) {
     if (arg === '--dry-run') flags.dryRun = true;
     else if (arg === '--uninstall') flags.uninstall = true;
+    else if (arg === '--force') flags.force = true;
+    else if (arg === '--backup') flags.backup = true;
+    else if (arg === '--clean') flags.clean = true;
     else if (arg === '--help' || arg === '-h') flags.help = true;
     else if (arg === '--version' || arg === '-v') flags.version = true;
     else if (arg.startsWith('--tool=')) flags.tool = arg.slice('--tool='.length);
@@ -45,9 +51,53 @@ Options:
   --target=/path/to/vault
   --dry-run
   --uninstall
+  --force       overwrite or remove modified C-Vault-tracked files
+  --backup      create .bak files before forced overwrite/removal
+  --clean       remove obsolete C-Vault-tracked files during update
   --version
   --help
 `;
+}
+
+function formatSummary(summary) {
+  const parts = [
+    `create ${summary.create || 0}`,
+    `update ${summary.update || 0}`,
+    `unchanged ${summary.unchanged || 0}`,
+    `force-overwrite ${summary.forceOverwrite || 0}`,
+    `remove ${summary.remove || 0}`,
+    `force-remove ${summary.forceRemove || 0}`,
+    `kept-obsolete ${summary.orphan || 0}`,
+    `conflicts ${summary.conflict || 0}`,
+    `orphan-conflicts ${summary.orphanConflict || 0}`,
+  ];
+  return parts.join(', ');
+}
+
+function logConflicts(result, log) {
+  if (!result.conflicts || result.conflicts.length === 0) {
+    return;
+  }
+  log('Skipped modified files. Re-run with --force to overwrite, or --force --backup to preserve .bak copies first.');
+  for (const conflict of result.conflicts.slice(0, 10)) {
+    log(`  ${conflict.destination}`);
+  }
+  if (result.conflicts.length > 10) {
+    log(`  ...and ${result.conflicts.length - 10} more`);
+  }
+}
+
+function logSkippedUninstall(result, log) {
+  if (!result.skipped || result.skipped.length === 0) {
+    return;
+  }
+  log('Skipped modified tracked files during uninstall. Re-run with --force to remove, or --force --backup to preserve .bak copies first.');
+  for (const entry of result.skipped.slice(0, 10)) {
+    log(`  ${entry.path}`);
+  }
+  if (result.skipped.length > 10) {
+    log(`  ...and ${result.skipped.length - 10} more`);
+  }
 }
 
 function run(options = {}) {
@@ -65,8 +115,16 @@ function run(options = {}) {
     return { version };
   }
   if (flags.uninstall) {
-    const result = uninstall({ target: flags.target, dryRun: flags.dryRun });
-    log(flags.dryRun ? `Would remove ${result.removedFiles} files.` : `Removed ${result.removedFiles} files.`);
+    const result = uninstall({
+      target: flags.target,
+      dryRun: flags.dryRun,
+      force: flags.force,
+      backup: flags.backup,
+    });
+    log(flags.dryRun
+      ? `Would remove ${result.removedFiles} files and skip ${result.skippedFiles || 0} modified files.`
+      : `Removed ${result.removedFiles} files and skipped ${result.skippedFiles || 0} modified files.`);
+    logSkippedUninstall(result, log);
     return result;
   }
 
@@ -82,8 +140,14 @@ function run(options = {}) {
     tool: flags.tool,
     scope: flags.scope,
     dryRun: flags.dryRun,
+    force: flags.force,
+    backup: flags.backup,
+    clean: flags.clean,
   });
-  log(flags.dryRun ? `Would copy ${result.actions.length} files to ${result.target}.` : `Installed ${result.actions.length} files to ${result.target}.`);
+  log(flags.dryRun
+    ? `Install plan for ${result.target}: ${formatSummary(result.summary)}.`
+    : `Install complete for ${result.target}: ${formatSummary(result.summary)}.`);
+  logConflicts(result, log);
   return result;
 }
 

@@ -42,6 +42,29 @@ test('buildInstallPlan maps auto installs to all generated surfaces', () => {
   assert.ok(plan.actions.some((action) => action.destination.endsWith('00_Inbox/README.md')));
 });
 
+test('buildInstallPlan de-duplicates identical generated destinations', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  write(path.join(root, 'generated/codex/AGENTS.md'), '# Shared Agents\n');
+  write(path.join(root, 'generated/common/AGENTS.md'), '# Shared Agents\n');
+
+  const plan = buildInstallPlan({ repoRoot: root, target, tool: 'auto', scope: 'project' });
+
+  assert.equal(plan.actions.filter((action) => action.destination.endsWith('AGENTS.md')).length, 1);
+});
+
+test('buildInstallPlan rejects conflicting generated destinations', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  write(path.join(root, 'generated/codex/AGENTS.md'), '# Codex Agents\n');
+  write(path.join(root, 'generated/common/AGENTS.md'), '# Common Agents\n');
+
+  assert.throws(
+    () => buildInstallPlan({ repoRoot: root, target, tool: 'auto', scope: 'project' }),
+    /Conflicting generated outputs target the same path/,
+  );
+});
+
 test('install writes a manifest and uninstall removes tracked files', () => {
   const root = makeGeneratedFixture();
   const target = path.join(root, 'target');
@@ -57,6 +80,10 @@ test('install writes a manifest and uninstall removes tracked files', () => {
   assert.equal(result.dryRun, false);
   assert.ok(fs.existsSync(path.join(target, '.claude/commands/daily-review.md')));
   assert.ok(fs.existsSync(path.join(target, '.c-vault-install.json')));
+  const manifest = JSON.parse(fs.readFileSync(path.join(target, '.c-vault-install.json'), 'utf8'));
+  assert.equal(manifest.schemaVersion, 2);
+  assert.equal(manifest.files[0].path.startsWith(target), true);
+  assert.match(manifest.files[0].installedHash, /^sha256:/);
 
   const removed = uninstall({ target, dryRun: false });
   assert.ok(removed.removedFiles >= 1);
@@ -76,15 +103,80 @@ test('dry-run returns planned actions without writing files', () => {
 
   assert.equal(result.dryRun, true);
   assert.ok(result.actions.length > 0);
+  assert.ok(result.summary.create > 0);
   assert.equal(fs.existsSync(target), false);
 });
 
+test('update skips user-modified files by default', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false });
+
+  const commandPath = path.join(target, '.claude/commands/daily-review.md');
+  write(commandPath, '# User Custom Daily Review\n');
+  write(path.join(root, 'generated/claude-code/.claude/commands/daily-review.md'), '# New Upstream Daily Review\n');
+
+  const result = install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false });
+
+  assert.equal(fs.readFileSync(commandPath, 'utf8'), '# User Custom Daily Review\n');
+  assert.equal(result.summary.conflict, 1);
+  assert.equal(result.conflicts[0].destination, commandPath);
+});
+
+test('force update with backup preserves modified file before overwriting', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false });
+
+  const commandPath = path.join(target, '.claude/commands/daily-review.md');
+  write(commandPath, '# User Custom Daily Review\n');
+  write(path.join(root, 'generated/claude-code/.claude/commands/daily-review.md'), '# New Upstream Daily Review\n');
+
+  const result = install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false, force: true, backup: true });
+
+  assert.equal(fs.readFileSync(commandPath, 'utf8'), '# New Upstream Daily Review\n');
+  assert.equal(fs.readFileSync(`${commandPath}.bak`, 'utf8'), '# User Custom Daily Review\n');
+  assert.equal(result.summary.forceOverwrite, 1);
+});
+
+test('uninstall skips modified tracked files unless forced', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false });
+
+  const commandPath = path.join(target, '.claude/commands/daily-review.md');
+  write(commandPath, '# User Custom Daily Review\n');
+
+  const result = uninstall({ target, dryRun: false });
+
+  assert.equal(result.skippedFiles, 1);
+  assert.equal(fs.readFileSync(commandPath, 'utf8'), '# User Custom Daily Review\n');
+  assert.ok(fs.existsSync(path.join(target, '.c-vault-install.json')));
+});
+
+test('clean update removes unchanged orphaned files from previous manifest', () => {
+  const root = makeGeneratedFixture();
+  const target = path.join(root, 'target');
+  install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false });
+
+  const skillPath = path.join(target, '.claude/skills/obsidian-markdown/SKILL.md');
+  fs.rmSync(path.join(root, 'generated/claude-code/.claude/skills/obsidian-markdown/SKILL.md'));
+
+  const result = install({ repoRoot: root, target, tool: 'claude-code', scope: 'project', dryRun: false, clean: true });
+
+  assert.equal(result.summary.remove, 1);
+  assert.equal(fs.existsSync(skillPath), false);
+});
+
 test('setup parser keeps pack filters from --packs', () => {
-  const flags = parseArgs(['--tool=codex', '--packs=core,cmo-skills', '--dry-run']);
+  const flags = parseArgs(['--tool=codex', '--packs=core,cmo-skills', '--dry-run', '--force', '--backup', '--clean']);
 
   assert.equal(flags.tool, 'codex');
   assert.deepEqual(flags.packs, ['core', 'cmo-skills']);
   assert.equal(flags.dryRun, true);
+  assert.equal(flags.force, true);
+  assert.equal(flags.backup, true);
+  assert.equal(flags.clean, true);
 });
 
 test('setup dry-run with pack filter does not rewrite repo generated output', () => {
