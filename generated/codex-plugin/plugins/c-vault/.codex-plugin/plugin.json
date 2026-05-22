@@ -20,9 +20,10 @@
       "Interactive"
     ],
     "defaultPrompt": [
-      "Run /thinking-partner for this new project.",
-      "Run /weekly-synthesis for this vault.",
-      "Run /cm-research for this product."
+      "Help me choose the right C-Vault workflow.",
+      "Synthesize this week's notes.",
+      "Plan content for this product.",
+      "Make this writing sound less AI."
     ]
   }
 }

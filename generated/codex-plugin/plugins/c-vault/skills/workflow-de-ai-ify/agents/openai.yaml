@@ -1,0 +1,3 @@
+interface:
+  display_name: "De-AI-ify"
+  short_description: "Run the /de-ai-ify C-Vault workflow"

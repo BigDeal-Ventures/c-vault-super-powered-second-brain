@@ -1,0 +1,3 @@
+interface:
+  display_name: "Ab Test Setup"
+  short_description: "Design statistically valid A/B tests with proper hypothesis, sample size, and decision criteria. Triggers - A/B test,..."

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Email Deliverability"
+  short_description: "Ensure emails reach the inbox (not spam). Covers email authentication (SPF, DKIM, DMARC), domain warmup, IP warmup, s..."

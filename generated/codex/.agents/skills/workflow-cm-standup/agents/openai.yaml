@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM standup — Marketing Standup"
+  short_description: "Run the /cm-standup C-Vault workflow"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Analytics Tracking"
+  short_description: "Set up event tracking, conversion pixels, and analytics for marketing campaigns. Covers GA4, Meta Pixel, LinkedIn Ins..."

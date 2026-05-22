@@ -1,0 +1,3 @@
+interface:
+  display_name: "New Client"
+  short_description: "Run the /new-client C-Vault workflow"

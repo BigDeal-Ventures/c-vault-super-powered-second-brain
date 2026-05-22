@@ -1,0 +1,3 @@
+interface:
+  display_name: "Market Sizing"
+  short_description: "Calculate TAM/SAM/SOM for market opportunity analysis. Uses top-down and bottom-up methods to size addressable market..."

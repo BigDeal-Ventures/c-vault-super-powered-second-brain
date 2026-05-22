@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM research — Deep Market Research Workflow"
+  short_description: "Run the /cm-research C-Vault workflow"

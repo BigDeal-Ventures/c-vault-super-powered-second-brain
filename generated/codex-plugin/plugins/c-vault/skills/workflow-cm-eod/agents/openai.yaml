@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM eod — End of Day Marketing Wrap"
+  short_description: "Run the /cm-eod C-Vault workflow"

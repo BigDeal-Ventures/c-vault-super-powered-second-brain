@@ -1,0 +1,3 @@
+interface:
+  display_name: "Inbox Processor"
+  short_description: "Run the /inbox-processor C-Vault workflow"

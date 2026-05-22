@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM retro — Campaign / Sprint Retrospective"
+  short_description: "Run the /cm-retro C-Vault workflow"

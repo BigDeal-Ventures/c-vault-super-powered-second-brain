@@ -1,0 +1,3 @@
+interface:
+  display_name: "cm-setup — Per-Project Bootstrap"
+  short_description: "Run the /cm-setup C-Vault workflow"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM weekly — Weekly Marketing Review"
+  short_description: "Run the /cm-weekly C-Vault workflow"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Pragmatic Review"
+  short_description: "Run the /pragmatic-review C-Vault workflow"

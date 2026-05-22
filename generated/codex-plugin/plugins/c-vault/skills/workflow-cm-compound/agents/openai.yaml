@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM compound — Document Learnings"
+  short_description: "Run the /cm-compound C-Vault workflow"

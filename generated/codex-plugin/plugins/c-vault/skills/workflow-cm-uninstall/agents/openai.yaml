@@ -1,0 +1,3 @@
+interface:
+  display_name: "cm-uninstall — Reverse a Compounding Marketing install"
+  short_description: "Run the /cm-uninstall C-Vault workflow"

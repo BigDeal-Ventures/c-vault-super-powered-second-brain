@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM position — Full Positioning Workshop"
+  short_description: "Run the /cm-position C-Vault workflow"

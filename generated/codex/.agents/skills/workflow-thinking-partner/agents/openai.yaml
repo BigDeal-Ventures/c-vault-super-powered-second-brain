@@ -1,0 +1,3 @@
+interface:
+  display_name: "Thinking Partner"
+  short_description: "Run the /thinking-partner C-Vault workflow"

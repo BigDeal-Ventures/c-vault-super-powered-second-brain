@@ -1,0 +1,3 @@
+interface:
+  display_name: "Email Sequence"
+  short_description: "Design automated email flows (welcome, nurture, trial, abandoned cart). Maps emails to customer journey. Triggers - e..."

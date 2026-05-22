@@ -1,0 +1,3 @@
+interface:
+  display_name: "Schema Markup"
+  short_description: "Implement structured data (Schema.org) for rich snippets, knowledge panels, and AI search. Triggers - schema markup,..."

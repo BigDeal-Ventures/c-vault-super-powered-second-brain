@@ -1,0 +1,3 @@
+interface:
+  display_name: "CM email — Email Campaign Setup End-to-End"
+  short_description: "Run the /cm-email C-Vault workflow"

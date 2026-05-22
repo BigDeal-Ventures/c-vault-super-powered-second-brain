@@ -91,6 +91,27 @@ After cloning the repo and running `npm run generate`, add the local marketplace
 
 The generated Codex plugin includes both `commands/` and `skills/`. The `workflow-*` skills mirror slash-command workflows so they can be enabled or disabled from the plugin detail screen.
 
+### Natural Language Routing
+
+The Codex plugin also includes a Superpowers-style `using-c-vault` meta skill. When you tag C-Vault or ask for broad vault, second-brain, or CMO help, it chooses the smallest matching workflow or specialist skill before acting.
+
+Explicit slash commands still work and remain the most direct path:
+
+```text
+[@c-vault] /weekly-synthesis for this week
+[@c-vault] /cm-research for AuthorityMax
+```
+
+Natural asks route through `using-c-vault`:
+
+```text
+[@c-vault] synthesize this week's notes
+[@c-vault] plan content for this product
+[@c-vault] make this writing sound less AI
+```
+
+If two routes are plausible, C-Vault asks one short clarification instead of guessing.
+
 ## Updating C-Vault
 
 Use the same `--tool`, `--target`, and `--packs` values you used during install. Always run a dry-run first so you can see which C-Vault-managed files will be created, updated, left unchanged, removed, or skipped as conflicts.

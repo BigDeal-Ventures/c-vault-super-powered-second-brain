@@ -60,6 +60,13 @@ function makeFixture() {
     '---',
     '# Positioning',
   ].join('\n'));
+  write(path.join(root, 'packs/cmo-skills/skills/content-strategy/SKILL.md'), [
+    '---',
+    'name: content-strategy',
+    'description: Plan content topics and editorial calendars.',
+    '---',
+    '# Content Strategy',
+  ].join('\n'));
   return root;
 }
 
@@ -93,7 +100,15 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/commands/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/agents/openai.yaml')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/positioning/agents/openai.yaml')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/references/routing.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/agents/openai.yaml')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/using-c-vault/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/using-c-vault/references/routing.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/workflow-daily-review/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/workflow-daily-review/agents/openai.yaml')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'cursor/.cursor/rules/daily-review.mdc')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'opencode/.opencode/command/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'obsidian/00_Inbox/README.md')));
@@ -109,6 +124,21 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   const workflowSkill = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/SKILL.md'), 'utf8');
   assert.match(workflowSkill, /name: workflow-daily-review/);
   assert.match(workflowSkill, /Use the vault to review the day/);
+
+  const routerSkill = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md'), 'utf8');
+  assert.match(routerSkill, /name: using-c-vault/);
+  assert.match(routerSkill, /description: Use when/);
+  assert.match(routerSkill, /references\/routing.md/);
+  assert.doesNotMatch(routerSkill, /weekly review \/ synthesize my week/);
+
+  const routing = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/references/routing.md'), 'utf8');
+  assert.match(routing, /\/daily-review/);
+  assert.match(routing, /\/cm-research/);
+  assert.match(routing, /content-strategy/);
+
+  const workflowAgent = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/agents/openai.yaml'), 'utf8');
+  assert.match(workflowAgent, /display_name: "Daily Review"/);
+  assert.match(workflowAgent, /short_description:/);
 });
 
 test('generateAll filters packs by id', () => {
@@ -125,4 +155,9 @@ test('generateAll filters packs by id', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
   assert.equal(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/cm-research.md')), false);
   assert.equal(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/positioning/SKILL.md')), false);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md')));
+  const routing = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/references/routing.md'), 'utf8');
+  assert.match(routing, /\/daily-review/);
+  assert.doesNotMatch(routing, /\/cm-research/);
+  assert.doesNotMatch(routing, /content-strategy/);
 });
