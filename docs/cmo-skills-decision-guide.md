@@ -1,5 +1,7 @@
 # CMO Skills Decision Guide
 
+[Docs Home](../README.md)
+
 Use this guide to choose the right CMO workflow or specialist skill.
 
 | If the user asks... | Use | Why |
@@ -17,3 +19,11 @@ Use this guide to choose the right CMO workflow or specialist skill.
 | Capture learnings | `/cm-compound` | Turns work into reusable marketing knowledge. |
 
 If two routes fit, ask one short clarification before choosing.
+
+## Related Docs
+
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)

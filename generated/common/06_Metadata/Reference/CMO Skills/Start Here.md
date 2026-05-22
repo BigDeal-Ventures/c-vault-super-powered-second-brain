@@ -28,3 +28,11 @@ Use this guide when you are new to CMO Skills or when starting marketing work in
 | Need launch planning | `/cm-launch` | `launch-strategy`, `press-pr`, `product-hunt-launch`, `/cm-social` |
 | Need funnel improvement | `/cm-audit` | `page-cro`, `signup-flow-cro`, `onboarding-cro`, `pricing-strategy` |
 | Need operating rhythm | `/cm-sprint` | `/cm-daily`, `/cm-weekly`, `/cm-retro`, `/cm-compound` |
+
+## Related Docs
+
+- [Playbooks](Playbooks.md)
+- [Decision Guide](Decision Guide.md)
+- [Operating Cadence](Operating Cadence.md)
+- [Example Outputs](Example Outputs.md)
+- [CMO Skills Guide](../CMO Skills Guide.md)

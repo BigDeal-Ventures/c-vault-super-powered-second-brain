@@ -1,5 +1,7 @@
 # CMO Skills Start Here
 
+[Docs Home](../README.md)
+
 Use this when starting marketing work in a new project or when you are unsure which CMO Skills workflow to run first.
 
 ## Recommended Sequence
@@ -21,3 +23,11 @@ Use this when starting marketing work in a new project or when you are unsure wh
 | Launch | `/cm-launch` | `launch-strategy`, `press-pr`, `product-hunt-launch`, `/cm-social` |
 | Funnel improvement | `/cm-audit` | `page-cro`, `signup-flow-cro`, `onboarding-cro`, `pricing-strategy` |
 | Marketing rhythm | `/cm-sprint` | `/cm-daily`, `/cm-weekly`, `/cm-retro`, `/cm-compound` |
+
+## Related Docs
+
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)

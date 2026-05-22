@@ -1,5 +1,7 @@
 # Install and Update Safety
 
+[Docs Home](../README.md)
+
 C-Vault is designed to be safe to test inside an existing vault or project.
 
 ## Dry Run First
@@ -40,3 +42,10 @@ node bin/setup.js --dry-run --tool=obsidian --target="/path/to/vault"
 ```
 
 Review conflicts before running without `--dry-run`.
+
+## Related Docs
+
+- [Overview](overview.md)
+- [Core Workflows](core-workflows.md)
+- [CMO Skills](cmo-skills.md)
+- [Examples](examples.md)

@@ -97,12 +97,19 @@ CMO Skills v1.6.0 adds reusable Compounding Marketing workflows and specialist B
 
 ## Handbook
 
-- `CMO Skills/Start Here.md` - recommended setup and first workflow path.
-- `CMO Skills/Playbooks.md` - scenario-based playbooks for launch, positioning, content, SEO/AEO, CRO, lifecycle, paid, and RevOps.
-- `CMO Skills/Decision Guide.md` - which command or skill to use by user intent.
-- `CMO Skills/Operating Cadence.md` - daily, weekly, sprint, monthly, and quarterly marketing rhythms.
-- `CMO Skills/Example Outputs.md` - examples of useful deliverables and output shapes.
+- [Start Here](CMO Skills/Start Here.md) - recommended setup and first workflow path.
+- [Playbooks](CMO Skills/Playbooks.md) - scenario-based playbooks for launch, positioning, content, SEO/AEO, CRO, lifecycle, paid, and RevOps.
+- [Decision Guide](CMO Skills/Decision Guide.md) - which command or skill to use by user intent.
+- [Operating Cadence](CMO Skills/Operating Cadence.md) - daily, weekly, sprint, monthly, and quarterly marketing rhythms.
+- [Example Outputs](CMO Skills/Example Outputs.md) - examples of useful deliverables and output shapes.
 
 ## MCP and Integrations
 
-If installed, CMO MCP setup notes live under `CMO Skills/MCP`. Integration notes live under `CMO Skills/Integrations`. These docs use placeholder credentials and environment variables only; add real keys in your local tool configuration, not in the vault docs.
+If installed, CMO MCP setup notes live under [MCP](CMO Skills/MCP/README.md). Integration notes live under [Integrations](CMO Skills/Integrations/README.md). These docs use placeholder credentials and environment variables only; add real keys in your local tool configuration, not in the vault docs.
+
+## Related Docs
+
+- [C-Vault Guide](C-Vault Guide.md)
+- [Command Catalog](Command Catalog.md)
+- [Skill Catalog](Skill Catalog.md)
+- [Examples](Examples.md)

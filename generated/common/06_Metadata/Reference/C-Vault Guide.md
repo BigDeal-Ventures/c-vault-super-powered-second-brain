@@ -9,11 +9,11 @@ C-Vault is a modular second-brain setup for Obsidian and agentic tools. It bundl
 
 ## Where to Start
 
-1. Read `Core Workflows.md` to understand the second-brain operating model.
-2. Read `Command Catalog.md` when you know the workflow you want to run.
-3. Read `Skill Catalog.md` when you want a specialist capability.
-4. Read `Examples.md` for practical prompts and slash-command examples.
-5. Read `CMO Skills Guide.md` for the overview, then `CMO Skills/Start Here.md`, `CMO Skills/Decision Guide.md`, and `CMO Skills/Playbooks.md` for real work.
+1. Read [Core Workflows](Core Workflows.md) to understand the second-brain operating model.
+2. Read [Command Catalog](Command Catalog.md) when you know the workflow you want to run.
+3. Read [Skill Catalog](Skill Catalog.md) when you want a specialist capability.
+4. Read [Examples](Examples.md) for practical prompts and slash-command examples.
+5. Read [CMO Skills Guide](CMO Skills Guide.md) for the overview, then [Start Here](CMO Skills/Start Here.md), [Decision Guide](CMO Skills/Decision Guide.md), and [Playbooks](CMO Skills/Playbooks.md) for real work.
 
 ## Installed Surfaces
 

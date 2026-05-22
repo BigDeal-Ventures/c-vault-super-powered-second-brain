@@ -1,5 +1,7 @@
 # CMO Skills Example Outputs
 
+[Docs Home](../README.md)
+
 These output shapes help users ask for usable deliverables.
 
 ## Research Brief
@@ -47,3 +49,11 @@ These output shapes help users ask for usable deliverables.
 - Asset checklist
 - Launch-day runbook
 - Post-launch retro questions
+
+## Related Docs
+
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)

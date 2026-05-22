@@ -1,5 +1,7 @@
 # C-Vault Documentation Overview
 
+[Docs Home](../README.md)
+
 C-Vault - Super Powered Second Brain is a modular vault and agent-workflow distribution. It packages a clean Obsidian starter, reusable second-brain commands, Claude Code skills, Codex skills and plugin output, Cursor rules, OpenCode commands, and CMO Skills.
 
 ## What Gets Installed
@@ -22,3 +24,10 @@ C-Vault - Super Powered Second Brain is a modular vault and agent-workflow distr
 ## Safety
 
 C-Vault installs are safe by default. The installer records generated files in `.c-vault-install.json`, updates only files that still match the prior generated version, and skips local edits as conflicts. Use `--dry-run` before installing into an existing vault.
+
+## Related Docs
+
+- [Core Workflows](core-workflows.md)
+- [CMO Skills](cmo-skills.md)
+- [Examples](examples.md)
+- [Install and Update Safety](install-update-safety.md)

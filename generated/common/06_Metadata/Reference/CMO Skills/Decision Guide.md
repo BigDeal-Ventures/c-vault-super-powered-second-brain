@@ -23,3 +23,11 @@ Use this when deciding which CMO workflow or specialist skill should handle a re
 - Positioning workflow vs skill: ask whether they want the full workshop or a focused positioning canvas.
 - Copy workflow vs copywriting skill: ask whether they want research-to-CRO or only draft copy.
 - Audit vs CRO skill: ask whether they want a broad funnel review or one surface improved.
+
+## Related Docs
+
+- [Start Here](Start Here.md)
+- [Playbooks](Playbooks.md)
+- [Operating Cadence](Operating Cadence.md)
+- [Example Outputs](Example Outputs.md)
+- [CMO Skills Guide](../CMO Skills Guide.md)

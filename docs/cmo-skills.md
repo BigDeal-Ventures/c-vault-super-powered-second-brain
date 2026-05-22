@@ -1,5 +1,7 @@
 # CMO Skills
 
+[Docs Home](../README.md)
+
 The `cmo-skills` pack bundles CMO Skills / Compounding Marketing v1.6.0 into C-Vault. It is designed for B2B SaaS marketing strategy, research, positioning, content, copy, SEO, CRO, lifecycle marketing, launch planning, and revenue operations.
 
 ## Workflow Commands
@@ -43,3 +45,12 @@ The pack includes public setup notes for MCP-backed research tools and marketing
 - `06_Metadata/Reference/CMO Skills/Integrations`
 
 These files contain placeholder credentials and environment variables such as `${EXA_API_KEY}`, `${PERPLEXITY_API_KEY}`, `lin_api_xxxx`, and sample token strings. Real secrets belong in local tool configuration, not committed docs.
+
+## Related Docs
+
+- [Overview](overview.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)

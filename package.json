@@ -12,8 +12,9 @@
     "generate": "node scripts/generate.js",
     "validate:packs": "node scripts/validate-packs.js",
     "validate:generated": "node scripts/validate-generated.js",
+    "validate:docs": "node scripts/validate-doc-links.js",
     "smoke:dry-run": "node scripts/smoke-install.js",
-    "validate": "npm test && npm run validate:packs && npm run generate && npm run validate:generated && npm run smoke:dry-run"
+    "validate": "npm test && npm run validate:packs && npm run generate && npm run validate:generated && npm run validate:docs && npm run smoke:dry-run"
   },
   "keywords": [
     "obsidian",

@@ -1,5 +1,7 @@
 # Core Workflows
 
+[Docs Home](../README.md)
+
 The core pack is the reusable second-brain layer. It includes vault structure, templates, shared agent instructions, and workflow commands that work across Claude Code, Codex, Cursor, OpenCode, and Obsidian.
 
 ## Commands
@@ -26,3 +28,9 @@ Core docs are generated into `06_Metadata/Reference`. They cover the operating g
 3. Process raw notes with `/inbox-processor`.
 4. Use `/thinking-partner`, `/research-assistant`, and `/de-ai-ify` during focused work.
 5. Run `/weekly-synthesis` to turn daily work into durable knowledge.
+
+## Related Docs
+
+- [Overview](overview.md)
+- [Examples](examples.md)
+- [Install and Update Safety](install-update-safety.md)

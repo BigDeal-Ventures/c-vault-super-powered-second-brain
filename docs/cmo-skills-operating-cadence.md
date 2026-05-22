@@ -1,5 +1,7 @@
 # CMO Skills Operating Cadence
 
+[Docs Home](../README.md)
+
 Use this cadence to make CMO Skills an ongoing operating system, not a pile of one-off prompts.
 
 ## Daily
@@ -25,3 +27,11 @@ Use this cadence to make CMO Skills an ongoing operating system, not a pile of o
 - Revisit `icp-research`, `competitive-analysis`, and `channel-strategy`.
 - Review content, SEO/AEO, paid, lifecycle, and CRO performance.
 - Update positioning and messaging if customer language or competitive alternatives changed.
+
+## Related Docs
+
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Playbooks](cmo-skills-playbooks.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)

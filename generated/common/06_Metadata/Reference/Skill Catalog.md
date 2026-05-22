@@ -65,3 +65,9 @@ This catalog lists installed C-Vault skills. `workflow-*` skills mirror slash co
 | `value-proposition` | CMO Skills | Design value propositions for customer segments using Strategyzer Value Proposition Canvas. Maps customer jobs, pains, and gains to product features, pain relievers, and gain creators. Triggers - value prop, value proposition canvas, customer jobs, pains and gains, value design, segment value prop. |
 | `video-marketing` | CMO Skills | Plan video content strategy — explainer videos, product demos, testimonials, thought leadership. Includes scripting and distribution. Triggers - video strategy, video content, explainer video, product demo video, video marketing, video script. |
 | `webinar-strategy` | CMO Skills | Plan and promote webinars for lead generation, product education, and thought leadership. Triggers - webinar, webinar strategy, event marketing, online event, virtual event. |
+
+## Related Docs
+
+- [C-Vault Guide](C-Vault Guide.md)
+- [Command Catalog](Command Catalog.md)
+- [Examples](Examples.md)

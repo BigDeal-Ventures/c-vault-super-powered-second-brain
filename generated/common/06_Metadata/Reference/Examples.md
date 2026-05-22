@@ -27,3 +27,11 @@ Use these examples as starting points. Direct slash commands are most determinis
 - Research competitors and ICP for this category.
 - Improve this homepage copy for conversion.
 
+## Related Docs
+
+- [C-Vault Guide](C-Vault Guide.md)
+- [Command Catalog](Command Catalog.md)
+- [Skill Catalog](Skill Catalog.md)
+- [Core Workflows](Core Workflows.md)
+- [CMO Skills Guide](CMO Skills Guide.md)
+- [CMO Skills Start Here](CMO Skills/Start Here.md)

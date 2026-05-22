@@ -165,6 +165,9 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.match(guide, /C-Vault - Super Powered Second Brain/);
   assert.match(guide, /Core/);
   assert.match(guide, /CMO Skills/);
+  assert.match(guide, /\[Core Workflows\]\(Core Workflows\.md\)/);
+  assert.match(guide, /\[CMO Skills Guide\]\(CMO Skills Guide\.md\)/);
+  assert.match(guide, /\[Command Catalog\]\(Command Catalog\.md\)/);
 
   const commandCatalog = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Command Catalog.md'), 'utf8');
   assert.match(commandCatalog, /\/daily-review/);
@@ -173,10 +176,17 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   const skillCatalog = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Skill Catalog.md'), 'utf8');
   assert.match(skillCatalog, /content-strategy/);
 
+  const cmoGuide = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md'), 'utf8');
+  assert.match(cmoGuide, /\[Start Here\]\(CMO Skills\/Start Here\.md\)/);
+  assert.match(cmoGuide, /\[Decision Guide\]\(CMO Skills\/Decision Guide\.md\)/);
+  assert.match(cmoGuide, /\[MCP\]\(CMO Skills\/MCP\/README\.md\)/);
+
   const cmoStartHere = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Start Here.md'), 'utf8');
   assert.match(cmoStartHere, /cm-context/);
   assert.match(cmoStartHere, /research/);
   assert.match(cmoStartHere, /positioning/);
+  assert.match(cmoStartHere, /\[Decision Guide\]\(Decision Guide\.md\)/);
+  assert.match(cmoStartHere, /\[Playbooks\]\(Playbooks\.md\)/);
 
   const cmoPlaybooks = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Playbooks.md'), 'utf8');
   assert.match(cmoPlaybooks, /Launch/);

@@ -1,5 +1,7 @@
 # C-Vault Examples
 
+[Docs Home](../README.md)
+
 ## Core
 
 ```text
@@ -40,3 +42,10 @@ Build a launch plan for this feature.
 ## Routing
 
 Direct slash commands are the most deterministic. Natural asks are routed through `using-c-vault`; if two routes are plausible, the agent should ask one short clarification.
+
+## Related Docs
+
+- [Overview](overview.md)
+- [Core Workflows](core-workflows.md)
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)

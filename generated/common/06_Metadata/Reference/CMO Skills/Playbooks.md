@@ -65,3 +65,11 @@ Goal: create focused acquisition campaigns with clear targeting and economics.
 2. Use `paid-ads`, `linkedin-ads`, `ad-creative`, and `abm-strategy` for campaign planning.
 3. Use `landing page copy` through `/cm-copy`, `copywriting`, and `page-cro`.
 4. Use `attribution-modeling` to understand pipeline impact.
+
+## Related Docs
+
+- [Start Here](Start Here.md)
+- [Decision Guide](Decision Guide.md)
+- [Operating Cadence](Operating Cadence.md)
+- [Example Outputs](Example Outputs.md)
+- [CMO Skills Guide](../CMO Skills Guide.md)

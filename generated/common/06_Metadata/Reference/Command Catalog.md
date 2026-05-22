@@ -30,3 +30,9 @@ This catalog lists generated C-Vault slash commands across installed packs.
 | `/research-assistant` | C-Vault Core | Research Assistant |
 | `/thinking-partner` | C-Vault Core | Thinking Partner |
 | `/weekly-synthesis` | C-Vault Core | Weekly Synthesis |
+
+## Related Docs
+
+- [C-Vault Guide](C-Vault Guide.md)
+- [Skill Catalog](Skill Catalog.md)
+- [Examples](Examples.md)

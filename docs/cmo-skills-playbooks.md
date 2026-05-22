@@ -1,5 +1,7 @@
 # CMO Skills Playbooks
 
+[Docs Home](../README.md)
+
 Use these playbooks when the user describes a marketing goal rather than naming a command or skill.
 
 ## Launch
@@ -37,3 +39,11 @@ Use these playbooks when the user describes a marketing goal rather than naming 
 2. Use `churn-prevention`, `referral-program`, and `community-strategy`.
 3. Use `sales-enablement`, `revops`, and `pricing-strategy`.
 4. Use `/cm-weekly` and `/cm-retro` to compound learnings.
+
+## Related Docs
+
+- [CMO Skills](cmo-skills.md)
+- [CMO Skills Start Here](cmo-skills-start-here.md)
+- [CMO Skills Decision Guide](cmo-skills-decision-guide.md)
+- [CMO Skills Operating Cadence](cmo-skills-operating-cadence.md)
+- [CMO Skills Example Outputs](cmo-skills-example-outputs.md)
