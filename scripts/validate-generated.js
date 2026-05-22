@@ -7,6 +7,9 @@ const root = path.resolve(__dirname, '..');
 const generated = path.join(root, 'generated');
 const required = [
   'claude-code/.claude/commands',
+  'claude-code/.claude/skills/using-c-vault/SKILL.md',
+  'claude-code/.claude/skills/using-c-vault/references/routing.md',
+  'claude-code/.claude/skills/workflow-daily-review/SKILL.md',
   'codex/.agents/skills',
   'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json',
   'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md',
@@ -33,6 +36,26 @@ const pluginPath = path.join(generated, 'codex-plugin/plugins/c-vault/.codex-plu
 if (fs.existsSync(pluginPath)) {
   const plugin = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
   if (plugin.skills !== './skills/') failures.push('Codex plugin manifest must declare skills: ./skills/');
+}
+
+const claudeCommandsDir = path.join(generated, 'claude-code/.claude/commands');
+const claudeSkillsDir = path.join(generated, 'claude-code/.claude/skills');
+if (fs.existsSync(claudeCommandsDir) && fs.existsSync(claudeSkillsDir)) {
+  for (const commandFile of listFiles(claudeCommandsDir).filter((file) => file.endsWith('.md'))) {
+    const commandName = path.basename(commandFile, '.md');
+    const workflowSkill = path.join(claudeSkillsDir, `workflow-${commandName}`, 'SKILL.md');
+    if (!fs.existsSync(workflowSkill)) {
+      failures.push(`Missing Claude Code workflow skill for /${commandName}`);
+    }
+  }
+}
+
+const claudeRouterPath = path.join(generated, 'claude-code/.claude/skills/using-c-vault/SKILL.md');
+if (fs.existsSync(claudeRouterPath)) {
+  const claudeRouter = fs.readFileSync(claudeRouterPath, 'utf8');
+  if (!/use the Skill tool/i.test(claudeRouter)) {
+    failures.push('Claude Code using-c-vault router must instruct agents to invoke the selected skill.');
+  }
 }
 
 for (const file of listFiles(generated)) {

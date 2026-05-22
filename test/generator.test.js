@@ -96,6 +96,9 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/SKILL.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/references/style.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-daily-review/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/references/routing.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/obsidian-markdown/references/style.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/commands/daily-review.md')));
@@ -125,13 +128,20 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.match(workflowSkill, /name: workflow-daily-review/);
   assert.match(workflowSkill, /Use the vault to review the day/);
 
-  const routerSkill = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md'), 'utf8');
+  const claudeWorkflowSkill = fs.readFileSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-daily-review/SKILL.md'), 'utf8');
+  assert.match(claudeWorkflowSkill, /name: workflow-daily-review/);
+  assert.match(claudeWorkflowSkill, /Use the vault to review the day/);
+  assert.doesNotMatch(claudeWorkflowSkill, /plugin skill settings/);
+
+  const routerSkill = fs.readFileSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/SKILL.md'), 'utf8');
   assert.match(routerSkill, /name: using-c-vault/);
   assert.match(routerSkill, /description: Use when/);
+  assert.match(routerSkill, /use the Skill tool/i);
+  assert.match(routerSkill, /Do not stop at naming the route/);
   assert.match(routerSkill, /references\/routing.md/);
   assert.doesNotMatch(routerSkill, /weekly review \/ synthesize my week/);
 
-  const routing = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/references/routing.md'), 'utf8');
+  const routing = fs.readFileSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/references/routing.md'), 'utf8');
   assert.match(routing, /\/daily-review/);
   assert.match(routing, /\/cm-research/);
   assert.match(routing, /content-strategy/);
@@ -154,9 +164,12 @@ test('generateAll filters packs by id', () => {
   assert.equal(result.packs, 1);
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
   assert.equal(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/cm-research.md')), false);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-daily-review/SKILL.md')));
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-cm-research/SKILL.md')), false);
   assert.equal(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/positioning/SKILL.md')), false);
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md')));
-  const routing = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/references/routing.md'), 'utf8');
+  const routing = fs.readFileSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/references/routing.md'), 'utf8');
   assert.match(routing, /\/daily-review/);
   assert.doesNotMatch(routing, /\/cm-research/);
   assert.doesNotMatch(routing, /content-strategy/);

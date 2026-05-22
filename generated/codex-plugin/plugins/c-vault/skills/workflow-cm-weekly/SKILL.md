@@ -5,7 +5,7 @@ description: Use when the user asks to run the /cm-weekly C-Vault workflow from 
 
 # workflow-cm-weekly
 
-This skill wraps the C-Vault /cm-weekly command so it can be enabled or disabled from plugin skill settings.
+This skill wraps the C-Vault /cm-weekly command so agents can route to it while the slash command remains available.
 
 Follow the embedded workflow exactly. Resolve vault paths relative to the current workspace or configured vault root.
 

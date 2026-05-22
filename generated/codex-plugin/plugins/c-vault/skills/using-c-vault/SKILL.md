@@ -7,6 +7,8 @@ description: Use when C-Vault is tagged or when the user asks for broad second-b
 
 C-Vault is a routing layer for second-brain workflows, vault operations, and CMO Skills. Before answering a C-Vault request, choose the smallest matching workflow or specialist skill.
 
+After selecting a route, invoke or load the matching skill using the current host environment, then follow that skill. In Claude Code, use the Skill tool. In Codex, use the selected installed skill or workflow skill. Do not stop at naming the route.
+
 ## Routing Priority
 
 1. If the user names a slash command, run that command.

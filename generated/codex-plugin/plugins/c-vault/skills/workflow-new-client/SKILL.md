@@ -5,7 +5,7 @@ description: Use when the user asks to run the /new-client C-Vault workflow from
 
 # workflow-new-client
 
-This skill wraps the C-Vault /new-client command so it can be enabled or disabled from plugin skill settings.
+This skill wraps the C-Vault /new-client command so agents can route to it while the slash command remains available.
 
 Follow the embedded workflow exactly. Resolve vault paths relative to the current workspace or configured vault root.
 

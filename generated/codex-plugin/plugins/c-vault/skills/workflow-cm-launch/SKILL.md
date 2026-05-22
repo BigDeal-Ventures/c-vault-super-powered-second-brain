@@ -5,7 +5,7 @@ description: Use when the user asks to run the /cm-launch C-Vault workflow from 
 
 # workflow-cm-launch
 
-This skill wraps the C-Vault /cm-launch command so it can be enabled or disabled from plugin skill settings.
+This skill wraps the C-Vault /cm-launch command so agents can route to it while the slash command remains available.
 
 Follow the embedded workflow exactly. Resolve vault paths relative to the current workspace or configured vault root.
 

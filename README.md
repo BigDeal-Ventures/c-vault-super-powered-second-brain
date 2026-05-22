@@ -93,21 +93,30 @@ The generated Codex plugin includes both `commands/` and `skills/`. The `workflo
 
 ### Natural Language Routing
 
-The Codex plugin also includes a Superpowers-style `using-c-vault` meta skill. When you tag C-Vault or ask for broad vault, second-brain, or CMO help, it chooses the smallest matching workflow or specialist skill before acting.
+C-Vault includes a Superpowers-style `using-c-vault` meta skill for Claude Code and Codex. When you ask for broad vault, second-brain, or CMO help, it chooses the smallest matching workflow or specialist skill before acting.
+
+Claude Code installs this under `.claude/skills/using-c-vault` and also generates `.claude/skills/workflow-*` wrappers for each slash command. Codex installs the same router under `.agents/skills`, and the Codex plugin exposes it through plugin skills.
 
 Explicit slash commands still work and remain the most direct path:
 
 ```text
-[@c-vault] /weekly-synthesis for this week
-[@c-vault] /cm-research for AuthorityMax
+/weekly-synthesis for this week
+/cm-research for AuthorityMax
 ```
 
 Natural asks route through `using-c-vault`:
 
 ```text
+synthesize this week's notes
+plan content for this product
+make this writing sound less AI
+```
+
+In Codex plugin chat, you can also tag the plugin:
+
+```text
 [@c-vault] synthesize this week's notes
 [@c-vault] plan content for this product
-[@c-vault] make this writing sound less AI
 ```
 
 If two routes are plausible, C-Vault asks one short clarification instead of guessing.
@@ -243,7 +252,7 @@ Re-run the project installer as well if you also installed the generated `.agent
 
 Canonical source lives in `packs/*`. Generated outputs live in `generated/*`.
 
-The Codex plugin mirrors the Superpowers plugin pattern: generated `workflow-*` skills wrap slash-command workflows so individual workflows and specialist skills can be enabled or disabled from the plugin detail screen.
+Claude Code and the Codex plugin mirror the Superpowers plugin pattern: `using-c-vault` routes natural asks, and generated `workflow-*` skills wrap slash-command workflows. In Codex plugin settings, individual workflows and specialist skills can be enabled or disabled from the plugin detail screen.
 
 ```bash
 npm run generate
