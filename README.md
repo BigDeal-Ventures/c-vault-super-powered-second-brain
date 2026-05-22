@@ -25,6 +25,13 @@ Install into a specific vault or project:
 npx @bigdeal-ventures/c-vault --tool=auto --target="/path/to/vault"
 ```
 
+Install only selected packs:
+
+```bash
+npx @bigdeal-ventures/c-vault --packs=core
+npx @bigdeal-ventures/c-vault --packs=core,cmo-skills
+```
+
 ## Supported Targets
 
 | Target | Output |
@@ -39,6 +46,8 @@ npx @bigdeal-ventures/c-vault --tool=auto --target="/path/to/vault"
 ## Project Model
 
 Canonical source lives in `packs/*`. Generated outputs live in `generated/*`.
+
+The Codex plugin mirrors the Superpowers plugin pattern: generated `workflow-*` skills wrap slash-command workflows so individual workflows and specialist skills can be enabled or disabled from the plugin detail screen.
 
 ```bash
 npm run generate

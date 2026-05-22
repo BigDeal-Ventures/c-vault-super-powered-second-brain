@@ -2,6 +2,7 @@
   "name": "c-vault",
   "version": "0.1.0",
   "description": "C-Vault workflows and skills for Codex.",
+  "skills": "./skills/",
   "author": {
     "name": "Chinmaya Shankar",
     "url": "https://bigdeal.ventures"

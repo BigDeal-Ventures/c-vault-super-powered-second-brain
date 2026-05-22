@@ -5,6 +5,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 const { buildInstallPlan, install, uninstall } = require('../lib/installer');
+const { parseArgs, run } = require('../bin/setup');
 
 function write(filePath, content) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -76,4 +77,41 @@ test('dry-run returns planned actions without writing files', () => {
   assert.equal(result.dryRun, true);
   assert.ok(result.actions.length > 0);
   assert.equal(fs.existsSync(target), false);
+});
+
+test('setup parser keeps pack filters from --packs', () => {
+  const flags = parseArgs(['--tool=codex', '--packs=core,cmo-skills', '--dry-run']);
+
+  assert.equal(flags.tool, 'codex');
+  assert.deepEqual(flags.packs, ['core', 'cmo-skills']);
+  assert.equal(flags.dryRun, true);
+});
+
+test('setup dry-run with pack filter does not rewrite repo generated output', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'c-vault-setup-'));
+  write(path.join(root, 'package.json'), JSON.stringify({ version: '0.1.0' }));
+  write(path.join(root, 'packs/core/pack.json'), JSON.stringify({
+    id: 'core',
+    name: 'Core',
+    version: '0.1.0',
+    description: 'Core pack',
+  }));
+  write(path.join(root, 'packs/core/commands/daily-review.md'), '# Daily Review\n');
+  write(path.join(root, 'packs/cmo-skills/pack.json'), JSON.stringify({
+    id: 'cmo-skills',
+    name: 'CMO Skills',
+    version: '1.6.0',
+    description: 'CMO pack',
+  }));
+  write(path.join(root, 'packs/cmo-skills/commands/cm-research.md'), '# CM Research\n');
+  write(path.join(root, 'generated/sentinel.txt'), 'keep me\n');
+
+  const result = run({
+    argv: ['--tool=codex', '--packs=core', '--dry-run', `--target=${path.join(root, 'target')}`],
+    repoRoot: root,
+    log: () => {},
+  });
+
+  assert.equal(result.actions.some((action) => action.destination.endsWith('cm-research.md')), false);
+  assert.equal(fs.readFileSync(path.join(root, 'generated/sentinel.txt'), 'utf8'), 'keep me\n');
 });

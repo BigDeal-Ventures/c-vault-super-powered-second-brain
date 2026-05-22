@@ -9,6 +9,7 @@ const required = [
   'claude-code/.claude/commands',
   'codex/.agents/skills',
   'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json',
+  'codex-plugin/plugins/c-vault/skills/workflow-daily-review/SKILL.md',
   'codex-plugin/.agents/plugins/marketplace.json',
   'cursor/.cursor/rules',
   'opencode/.opencode/command',
@@ -20,6 +21,12 @@ const machinePathPattern = /\/Users\/[A-Za-z0-9._-]+/;
 
 for (const rel of required) {
   if (!fs.existsSync(path.join(generated, rel))) failures.push(`Missing generated output: ${rel}`);
+}
+
+const pluginPath = path.join(generated, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json');
+if (fs.existsSync(pluginPath)) {
+  const plugin = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
+  if (plugin.skills !== './skills/') failures.push('Codex plugin manifest must declare skills: ./skills/');
 }
 
 for (const file of listFiles(generated)) {

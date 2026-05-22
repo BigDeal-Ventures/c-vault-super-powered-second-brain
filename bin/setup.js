@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const { generateAll } = require('../lib/generator');
 const { install, uninstall } = require('../lib/installer');
@@ -8,6 +10,7 @@ function parseArgs(argv) {
     tool: 'auto',
     scope: 'project',
     target: process.cwd(),
+    packs: [],
     dryRun: false,
     uninstall: false,
     help: false,
@@ -22,17 +25,16 @@ function parseArgs(argv) {
     else if (arg.startsWith('--tool=')) flags.tool = arg.slice('--tool='.length);
     else if (arg.startsWith('--scope=')) flags.scope = arg.slice('--scope='.length);
     else if (arg.startsWith('--target=')) flags.target = arg.slice('--target='.length);
-    else if (arg.startsWith('--packs=')) {
-      // Pack filtering is reserved for the next release; all packs are generated in v0.1.
-    } else {
+    else if (arg.startsWith('--packs=')) flags.packs = arg.slice('--packs='.length).split(',').map((value) => value.trim()).filter(Boolean);
+    else {
       throw new Error(`Unknown argument: ${arg}`);
     }
   }
   return flags;
 }
 
-function printHelp() {
-  console.log(`C-Vault - Super Powered Second Brain
+function helpText() {
+  return `C-Vault - Super Powered Second Brain
 
 Usage:
   c-vault [options]
@@ -45,36 +47,48 @@ Options:
   --uninstall
   --version
   --help
-`);
+`;
 }
 
-function main() {
-  const flags = parseArgs(process.argv.slice(2));
-  const repoRoot = path.resolve(__dirname, '..');
+function run(options = {}) {
+  const flags = parseArgs(options.argv || process.argv.slice(2));
+  const repoRoot = options.repoRoot || path.resolve(__dirname, '..');
+  const log = options.log || console.log;
 
   if (flags.help) {
-    printHelp();
-    return;
+    log(helpText());
+    return { help: true };
   }
   if (flags.version) {
-    console.log(require('../package.json').version);
-    return;
+    const version = require('../package.json').version;
+    log(version);
+    return { version };
   }
   if (flags.uninstall) {
     const result = uninstall({ target: flags.target, dryRun: flags.dryRun });
-    console.log(flags.dryRun ? `Would remove ${result.removedFiles} files.` : `Removed ${result.removedFiles} files.`);
-    return;
+    log(flags.dryRun ? `Would remove ${result.removedFiles} files.` : `Removed ${result.removedFiles} files.`);
+    return result;
   }
 
-  generateAll({ repoRoot });
-  const result = install({
+  const workRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'c-vault-install-'));
+  generateAll({
     repoRoot,
+    outputDir: path.join(workRoot, 'generated'),
+    packIds: flags.packs,
+  });
+  const result = install({
+    repoRoot: workRoot,
     target: flags.target,
     tool: flags.tool,
     scope: flags.scope,
     dryRun: flags.dryRun,
   });
-  console.log(flags.dryRun ? `Would copy ${result.actions.length} files to ${result.target}.` : `Installed ${result.actions.length} files to ${result.target}.`);
+  log(flags.dryRun ? `Would copy ${result.actions.length} files to ${result.target}.` : `Installed ${result.actions.length} files to ${result.target}.`);
+  return result;
+}
+
+function main() {
+  run();
 }
 
 if (require.main === module) {
@@ -85,3 +99,5 @@ if (require.main === module) {
     process.exit(1);
   }
 }
+
+module.exports = { parseArgs, run };

@@ -15,6 +15,7 @@ function write(filePath, content) {
 function makeFixture() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'c-vault-generator-'));
   write(path.join(root, 'packs/core/pack.json'), JSON.stringify({
+    id: 'core',
     name: 'core',
     displayName: 'Core',
     description: 'Core workflows',
@@ -38,19 +39,41 @@ function makeFixture() {
   write(path.join(root, 'packs/core/templates/Daily Note.md'), '# Daily Note\n');
   write(path.join(root, 'packs/core/obsidian/00_Inbox/README.md'), '# Inbox\n');
   write(path.join(root, 'packs/core/instructions/operating-guide.md'), '# Operating Guide\n');
+  write(path.join(root, 'packs/cmo-skills/pack.json'), JSON.stringify({
+    id: 'cmo-skills',
+    name: 'CMO Skills',
+    displayName: 'CMO Skills',
+    description: 'Marketing workflows',
+    version: '1.6.0',
+  }, null, 2));
+  write(path.join(root, 'packs/cmo-skills/commands/cm-research.md'), [
+    '---',
+    'description: Research a market.',
+    '---',
+    '# CM Research',
+    'Run the research workflow.',
+  ].join('\n'));
+  write(path.join(root, 'packs/cmo-skills/skills/positioning/SKILL.md'), [
+    '---',
+    'name: positioning',
+    'description: Position a product.',
+    '---',
+    '# Positioning',
+  ].join('\n'));
   return root;
 }
 
 test('loadPacks discovers valid packs and content counts', () => {
   const root = makeFixture();
   const packs = loadPacks(path.join(root, 'packs'));
+  const core = packs.find((pack) => pack.id === 'core');
 
-  assert.equal(packs.length, 1);
-  assert.equal(packs[0].name, 'core');
-  assert.equal(packs[0].commands.length, 1);
-  assert.equal(packs[0].skills.length, 1);
-  assert.equal(packs[0].templates.length, 1);
-  assert.equal(packs[0].obsidianFiles.length, 1);
+  assert.equal(packs.length, 2);
+  assert.equal(core.name, 'core');
+  assert.equal(core.commands.length, 1);
+  assert.equal(core.skills.length, 1);
+  assert.equal(core.templates.length, 1);
+  assert.equal(core.obsidianFiles.length, 1);
 });
 
 test('generateAll writes tool adapters without machine-specific paths', () => {
@@ -62,13 +85,15 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
     packageVersion: '0.1.0',
   });
 
-  assert.equal(result.packs, 1);
+  assert.equal(result.packs, 2);
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/SKILL.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/references/style.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/obsidian-markdown/references/style.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/commands/daily-review.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/workflow-daily-review/SKILL.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'cursor/.cursor/rules/daily-review.mdc')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'opencode/.opencode/command/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'obsidian/00_Inbox/README.md')));
@@ -77,4 +102,27 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.match(codexShim, /pack: core/);
   assert.match(codexShim, /Use the vault to review the day/);
   assert.doesNotMatch(codexShim, /\/Users\/Chinmaya/);
+
+  const plugin = JSON.parse(fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json'), 'utf8'));
+  assert.equal(plugin.skills, './skills/');
+
+  const workflowSkill = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/SKILL.md'), 'utf8');
+  assert.match(workflowSkill, /name: workflow-daily-review/);
+  assert.match(workflowSkill, /Use the vault to review the day/);
+});
+
+test('generateAll filters packs by id', () => {
+  const root = makeFixture();
+  const generatedRoot = path.join(root, 'generated');
+  const result = generateAll({
+    packsDir: path.join(root, 'packs'),
+    outputDir: generatedRoot,
+    packageVersion: '0.1.0',
+    packIds: ['core'],
+  });
+
+  assert.equal(result.packs, 1);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/cm-research.md')), false);
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/positioning/SKILL.md')), false);
 });
