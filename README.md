@@ -5,7 +5,7 @@ C-Vault is a release-ready Obsidian second-brain starter with bundled AI workflo
 It is inspired by Claudesidian's simple vault-first setup, then adds a modular pack system. The first release includes:
 
 - `core` - daily second-brain workflows, PARA folders, templates, and vault operating guidance.
-- `cmo-skills` - CMO Skills / Compounding Marketing workflows and specialist marketing skills.
+- `cmo-skills` - CMO Skills / Compounding Marketing v1.6.0 workflows and specialist marketing skills.
 
 ## Quick Start
 

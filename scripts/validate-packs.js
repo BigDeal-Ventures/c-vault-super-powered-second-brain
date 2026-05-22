@@ -10,11 +10,25 @@ const failures = [];
 const secretPattern = /(?:AIza[0-9A-Za-z_-]{20,}|pplx-[0-9A-Za-z_-]{20,}|sk-[0-9A-Za-z_-]{20,})/;
 const machinePathPattern = /\/Users\/[A-Za-z0-9._-]+/;
 
+function assertCount(pack, label, actual, expected) {
+  if (expected !== undefined && actual !== expected) {
+    failures.push(`${pack.name}: ${label} count mismatch, expected ${expected}, found ${actual}`);
+  }
+}
+
 if (packs.length === 0) failures.push('No packs found.');
 
 for (const pack of packs) {
   if (!pack.version) failures.push(`${pack.name}: missing version`);
   if (!pack.description) failures.push(`${pack.name}: missing description`);
+  if (pack.source?.version && pack.source.version !== pack.version) {
+    failures.push(`${pack.name}: source.version ${pack.source.version} does not match pack version ${pack.version}`);
+  }
+  assertCount(pack, 'commands', pack.commands.length, pack.components?.commands?.count);
+  assertCount(pack, 'skills', pack.skills.length, pack.components?.skills?.count);
+  assertCount(pack, 'skillReferences', listFiles(path.join(pack.root, 'skills')).filter((file) => file.includes(`${path.sep}references${path.sep}`)).length, pack.components?.skillReferences?.count);
+  assertCount(pack, 'mcp', listFiles(path.join(pack.root, 'mcp')).length, pack.components?.mcp?.count);
+  assertCount(pack, 'integrations', listFiles(path.join(pack.root, 'integrations')).length, pack.components?.integrations?.count);
   if (pack.commands.length === 0 && pack.skills.length === 0 && pack.obsidianFiles.length === 0) {
     failures.push(`${pack.name}: no commands, skills, or obsidian files`);
   }
