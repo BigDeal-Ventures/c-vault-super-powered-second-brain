@@ -1,0 +1,21 @@
+{
+  "name": "exa",
+  "description": "Exa AI MCP server for neural web search and company research",
+  "package": "exa-mcp-server",
+  "version": "latest",
+  "command": "npx",
+  "args": ["-y", "exa-mcp-server"],
+  "env": {
+    "EXA_API_KEY": "${EXA_API_KEY}"
+  },
+  "tools": [
+    "web_search_exa",
+    "web_search_advanced_exa",
+    "company_research_exa",
+    "people_search_exa",
+    "crawling_exa",
+    "deep_researcher_start",
+    "deep_researcher_check",
+    "get_code_context_exa"
+  ]
+}

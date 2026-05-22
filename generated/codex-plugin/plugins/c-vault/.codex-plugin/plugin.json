@@ -1,0 +1,27 @@
+{
+  "name": "c-vault",
+  "version": "0.1.0",
+  "description": "C-Vault workflows and skills for Codex.",
+  "author": {
+    "name": "Chinmaya Shankar",
+    "url": "https://bigdeal.ventures"
+  },
+  "license": "MIT",
+  "interface": {
+    "displayName": "C-Vault",
+    "shortDescription": "Super powered second brain workflows for Codex",
+    "longDescription": "C-Vault brings second-brain workflows, Obsidian vault conventions, and CMO Skills into Codex through generated commands and skills. Use it for daily review, weekly synthesis, research, inbox processing, writing cleanup, and B2B SaaS marketing workflows.",
+    "developerName": "Chinmaya Shankar",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Run /thinking-partner for this new project.",
+      "Run /weekly-synthesis for this vault.",
+      "Run /cm-research for this product."
+    ]
+  }
+}

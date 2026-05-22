@@ -1,0 +1,60 @@
+{
+  "id": "cmo-skills",
+  "name": "CMO Skills",
+  "version": "1.6.0",
+  "description": "Reusable Compounding Marketing workflows and specialist CMO skills for B2B SaaS marketing.",
+  "source": {
+    "name": "compounding-marketing",
+    "repository": "https://github.com/classicchins/compounding-marketing",
+    "version": "1.6.0"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Chinmaya Shankar",
+    "email": "c@bigdeal.ventures"
+  },
+  "keywords": [
+    "marketing",
+    "saas-marketing",
+    "positioning",
+    "messaging",
+    "copywriting",
+    "cro",
+    "seo",
+    "gtm",
+    "mcp"
+  ],
+  "components": {
+    "commands": {
+      "path": "commands",
+      "pattern": "*.md",
+      "count": 16
+    },
+    "skills": {
+      "path": "skills",
+      "pattern": "*/SKILL.md",
+      "count": 61
+    },
+    "skillReferences": {
+      "path": "skills",
+      "pattern": "*/references/*.md",
+      "count": 3
+    },
+    "mcp": {
+      "path": "mcp",
+      "count": 7
+    },
+    "integrations": {
+      "path": "integrations",
+      "count": 10
+    }
+  },
+  "install": {
+    "safeByDefault": true,
+    "requiresSecrets": false,
+    "secretPlaceholders": [
+      "EXA_API_KEY",
+      "PERPLEXITY_API_KEY"
+    ]
+  }
+}

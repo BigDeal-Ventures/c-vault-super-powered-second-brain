@@ -1,0 +1,42 @@
+---
+description: New Client
+alwaysApply: false
+---
+
+# new-client
+
+Generated from C-Vault pack C-Vault Core.
+
+# New Client
+
+Use this to set up a clean client workspace inside a vault.
+
+## Workflow
+
+1. Ask for the client name, engagement type, start date, and confidentiality requirements.
+2. Create a neutral folder name and client README outline.
+3. Define standard subfolders only if the user wants them.
+4. Capture goals, stakeholders, communication norms, assets, and open questions.
+5. Add a handoff section for future agents.
+6. Avoid storing credentials, private keys, or contract terms unless the vault owner explicitly requests it.
+
+## Suggested structure
+
+```text
+07_Clients/
+  Client Name/
+    README.md
+    Notes/
+    Deliverables/
+    Research/
+    Archive/
+```
+
+## Output
+
+Return:
+
+- Proposed folder name
+- README content
+- Initial checklist
+- Questions to confirm before filing sensitive details

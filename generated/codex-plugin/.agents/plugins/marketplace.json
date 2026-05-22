@@ -1,0 +1,20 @@
+{
+  "name": "c-vault",
+  "interface": {
+    "displayName": "C-Vault"
+  },
+  "plugins": [
+    {
+      "name": "c-vault",
+      "source": {
+        "source": "local",
+        "path": "./plugins/c-vault"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

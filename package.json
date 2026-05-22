@@ -1,0 +1,44 @@
+{
+  "name": "@bigdeal-ventures/c-vault",
+  "version": "0.1.0",
+  "description": "C-Vault - Super Powered Second Brain: modular Obsidian vault, Claude Code workflows, Codex plugin adapters, and CMO skills.",
+  "type": "commonjs",
+  "bin": {
+    "c-vault": "bin/setup.js",
+    "cvault": "bin/setup.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "generate": "node scripts/generate.js",
+    "validate:packs": "node scripts/validate-packs.js",
+    "validate:generated": "node scripts/validate-generated.js",
+    "smoke:dry-run": "node scripts/smoke-install.js",
+    "validate": "npm test && npm run validate:packs && npm run generate && npm run validate:generated && npm run smoke:dry-run"
+  },
+  "keywords": [
+    "obsidian",
+    "second-brain",
+    "claude-code",
+    "codex",
+    "cursor",
+    "cmo-skills",
+    "ai-workflows"
+  ],
+  "author": "Chinmaya Shankar <c@bigdeal.ventures>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/",
+    "packs/",
+    "generated/",
+    "install.sh",
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "LICENSE"
+  ]
+}

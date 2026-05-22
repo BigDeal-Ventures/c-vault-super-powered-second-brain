@@ -1,0 +1,80 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const test = require('node:test');
+
+const { generateAll } = require('../lib/generator');
+const { loadPacks } = require('../lib/pack-loader');
+
+function write(filePath, content) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content);
+}
+
+function makeFixture() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'c-vault-generator-'));
+  write(path.join(root, 'packs/core/pack.json'), JSON.stringify({
+    name: 'core',
+    displayName: 'Core',
+    description: 'Core workflows',
+    version: '0.1.0',
+  }, null, 2));
+  write(path.join(root, 'packs/core/commands/daily-review.md'), [
+    '---',
+    'description: Review the day.',
+    '---',
+    '# Daily Review',
+    'Use the vault to review the day.',
+  ].join('\n'));
+  write(path.join(root, 'packs/core/skills/obsidian-markdown/SKILL.md'), [
+    '---',
+    'name: obsidian-markdown',
+    'description: Write Obsidian markdown.',
+    '---',
+    '# Obsidian Markdown',
+  ].join('\n'));
+  write(path.join(root, 'packs/core/skills/obsidian-markdown/references/style.md'), '# Style Reference\n');
+  write(path.join(root, 'packs/core/templates/Daily Note.md'), '# Daily Note\n');
+  write(path.join(root, 'packs/core/obsidian/00_Inbox/README.md'), '# Inbox\n');
+  write(path.join(root, 'packs/core/instructions/operating-guide.md'), '# Operating Guide\n');
+  return root;
+}
+
+test('loadPacks discovers valid packs and content counts', () => {
+  const root = makeFixture();
+  const packs = loadPacks(path.join(root, 'packs'));
+
+  assert.equal(packs.length, 1);
+  assert.equal(packs[0].name, 'core');
+  assert.equal(packs[0].commands.length, 1);
+  assert.equal(packs[0].skills.length, 1);
+  assert.equal(packs[0].templates.length, 1);
+  assert.equal(packs[0].obsidianFiles.length, 1);
+});
+
+test('generateAll writes tool adapters without machine-specific paths', () => {
+  const root = makeFixture();
+  const generatedRoot = path.join(root, 'generated');
+  const result = generateAll({
+    packsDir: path.join(root, 'packs'),
+    outputDir: generatedRoot,
+    packageVersion: '0.1.0',
+  });
+
+  assert.equal(result.packs, 1);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/commands/daily-review.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/SKILL.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/obsidian-markdown/references/style.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/obsidian-markdown/references/style.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/.codex-plugin/plugin.json')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/commands/daily-review.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'cursor/.cursor/rules/daily-review.mdc')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'opencode/.opencode/command/daily-review.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'obsidian/00_Inbox/README.md')));
+
+  const codexShim = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/commands/daily-review.md'), 'utf8');
+  assert.match(codexShim, /pack: core/);
+  assert.match(codexShim, /Use the vault to review the day/);
+  assert.doesNotMatch(codexShim, /\/Users\/Chinmaya/);
+});

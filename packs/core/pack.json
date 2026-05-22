@@ -1,0 +1,46 @@
+{
+  "id": "core",
+  "name": "C-Vault Core",
+  "version": "0.1.0",
+  "description": "Sanitized reusable second-brain workflows, templates, starter vault folders, and agent instructions.",
+  "license": "MIT",
+  "compatibility": {
+    "tools": ["claude", "codex", "cursor", "opencode", "obsidian"],
+    "requires": {
+      "node": ">=18.0.0"
+    }
+  },
+  "contents": {
+    "commands": [
+      "thinking-partner",
+      "inbox-processor",
+      "daily-review",
+      "weekly-synthesis",
+      "research-assistant",
+      "de-ai-ify",
+      "add-frontmatter",
+      "create-command",
+      "new-client",
+      "pragmatic-review"
+    ],
+    "templates": [
+      "daily-note",
+      "project",
+      "research-note",
+      "client-readme",
+      "decision-log"
+    ],
+    "instructions": [
+      "operating-guide",
+      "agent-collaboration",
+      "privacy-and-safety",
+      "voice-and-style",
+      "vault-structure"
+    ],
+    "obsidianStarter": "obsidian"
+  },
+  "sanitization": {
+    "policy": "No personal data, client work, active-work notes, local absolute paths, tokens, secrets, or private MCP configuration are included.",
+    "source": "Inspired by reusable C-Vault patterns only; content is rewritten as a clean starter pack."
+  }
+}
