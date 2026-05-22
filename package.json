@@ -34,6 +34,7 @@
     "lib/",
     "scripts/",
     "packs/",
+    "docs/*.md",
     "generated/",
     "install.sh",
     "README.md",

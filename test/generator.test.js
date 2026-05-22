@@ -67,6 +67,8 @@ function makeFixture() {
     '---',
     '# Content Strategy',
   ].join('\n'));
+  write(path.join(root, 'packs/cmo-skills/mcp/exa/setup.md'), '# Exa Setup\n');
+  write(path.join(root, 'packs/cmo-skills/integrations/README.md'), '# CMO Integrations\n');
   return root;
 }
 
@@ -112,6 +114,14 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/using-c-vault/references/routing.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/workflow-daily-review/SKILL.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex/.agents/skills/workflow-daily-review/agents/openai.yaml')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Core Workflows.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Command Catalog.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Skill Catalog.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Examples.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/MCP/exa/setup.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/Integrations/README.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'cursor/.cursor/rules/daily-review.mdc')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'opencode/.opencode/command/daily-review.md')));
   assert.ok(fs.existsSync(path.join(generatedRoot, 'obsidian/00_Inbox/README.md')));
@@ -146,6 +156,18 @@ test('generateAll writes tool adapters without machine-specific paths', () => {
   assert.match(routing, /\/cm-research/);
   assert.match(routing, /content-strategy/);
 
+  const guide = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md'), 'utf8');
+  assert.match(guide, /C-Vault - Super Powered Second Brain/);
+  assert.match(guide, /Core/);
+  assert.match(guide, /CMO Skills/);
+
+  const commandCatalog = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Command Catalog.md'), 'utf8');
+  assert.match(commandCatalog, /\/daily-review/);
+  assert.match(commandCatalog, /\/cm-research/);
+
+  const skillCatalog = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Skill Catalog.md'), 'utf8');
+  assert.match(skillCatalog, /content-strategy/);
+
   const workflowAgent = fs.readFileSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/workflow-daily-review/agents/openai.yaml'), 'utf8');
   assert.match(workflowAgent, /display_name: "Daily Review"/);
   assert.match(workflowAgent, /short_description:/);
@@ -168,9 +190,38 @@ test('generateAll filters packs by id', () => {
   assert.ok(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-daily-review/SKILL.md')));
   assert.equal(fs.existsSync(path.join(generatedRoot, 'claude-code/.claude/skills/workflow-cm-research/SKILL.md')), false);
   assert.equal(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/positioning/SKILL.md')), false);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md')));
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md')), false);
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/MCP/exa/setup.md')), false);
   assert.ok(fs.existsSync(path.join(generatedRoot, 'codex-plugin/plugins/c-vault/skills/using-c-vault/SKILL.md')));
   const routing = fs.readFileSync(path.join(generatedRoot, 'claude-code/.claude/skills/using-c-vault/references/routing.md'), 'utf8');
   assert.match(routing, /\/daily-review/);
   assert.doesNotMatch(routing, /\/cm-research/);
   assert.doesNotMatch(routing, /content-strategy/);
+});
+
+test('generateAll writes pack-specific docs for cmo-skills only installs', () => {
+  const root = makeFixture();
+  const generatedRoot = path.join(root, 'generated');
+  const result = generateAll({
+    packsDir: path.join(root, 'packs'),
+    outputDir: generatedRoot,
+    packageVersion: '0.1.0',
+    packIds: ['cmo-skills'],
+  });
+
+  assert.equal(result.packs, 1);
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills Guide.md')));
+  assert.ok(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/CMO Skills/MCP/exa/setup.md')));
+  assert.equal(fs.existsSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Core Workflows.md')), false);
+
+  const guide = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/C-Vault Guide.md'), 'utf8');
+  assert.match(guide, /CMO Skills Guide/);
+  assert.doesNotMatch(guide, /Core Workflows\.md/);
+
+  const examples = fs.readFileSync(path.join(generatedRoot, 'common/06_Metadata/Reference/Examples.md'), 'utf8');
+  assert.match(examples, /CMO Skills Examples/);
+  assert.doesNotMatch(examples, /Core Examples/);
+  assert.doesNotMatch(examples, /daily-review/);
 });

@@ -7,6 +7,16 @@ It is inspired by Claudesidian's simple vault-first setup, then adds a modular p
 - `core` - daily second-brain workflows, PARA folders, templates, and vault operating guidance.
 - `cmo-skills` - CMO Skills / Compounding Marketing v1.6.0 workflows and specialist marketing skills.
 
+## Docs
+
+- [Overview](docs/overview.md)
+- [Core workflows](docs/core-workflows.md)
+- [CMO Skills](docs/cmo-skills.md)
+- [Examples](docs/examples.md)
+- [Install and update safety](docs/install-update-safety.md)
+
+Installed vaults also get generated reference docs under `06_Metadata/Reference`, including `C-Vault Guide.md`, `Core Workflows.md`, `CMO Skills Guide.md`, `Command Catalog.md`, `Skill Catalog.md`, and `Examples.md`.
+
 ## Quick Start
 
 ### Manual Install
